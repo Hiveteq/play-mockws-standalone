@@ -1,4 +1,4 @@
-name := "play-mockws"
+name := "play-mockws-standalone"
 
 scalaVersion := "2.12.2"
 
@@ -10,14 +10,17 @@ organization := "de.leanovate.play-mockws"
 
 val playVersion = "2.6.0"
 
+val playWsStandaloneVersion = "1.0.0"
+
 fork := true
 
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play"                             % playVersion % "provided",
-  "com.typesafe.play" %% "play-ahc-ws"                      % playVersion % "provided",
-  "com.typesafe.play" %% "play-test"                        % playVersion % "provided",
+  "com.typesafe.play" %% "play-ahc-ws-standalone" % playWsStandaloneVersion,
+  "com.typesafe.play" %% "play-ws-standalone-json" % playWsStandaloneVersion,
+  "com.typesafe.play" %% "play-ws-standalone-xml" % playWsStandaloneVersion,
+  "com.typesafe.play" %% "play-test"                        % playVersion ,
   "com.typesafe.play" %% "play-iteratees-reactive-streams"  % "2.6.1"
 )
 

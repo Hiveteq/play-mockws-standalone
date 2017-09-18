@@ -4,7 +4,7 @@ import java.util.UUID
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import play.api.libs.ws.{WSClient, WSRequest}
+import play.api.libs.ws.{StandaloneWSClient, StandaloneWSRequest}
 import play.api.mvc.EssentialAction
 
 /**
@@ -31,7 +31,7 @@ import play.api.mvc.EssentialAction
  *
  * @param routes routes defining the mock calls
  */
-class MockWS(routes: MockWS.Routes, shutdownHook: () ⇒ Unit)(implicit val materializer: ActorMaterializer) extends WSClient {
+class MockWS(routes: MockWS.Routes, shutdownHook: () ⇒ Unit)(implicit val materializer: ActorMaterializer) extends StandaloneWSClient {
   require(routes != null)
 
   override def underlying[T]: T = this.asInstanceOf[T]
@@ -40,7 +40,7 @@ class MockWS(routes: MockWS.Routes, shutdownHook: () ⇒ Unit)(implicit val mate
     shutdownHook()
   }
 
-  override def url(url: String): WSRequest = FakeWSRequestHolder(routes, url)
+  override def url(url: String): StandaloneWSRequest = FakeWSRequestHolder(routes, url)
 }
 
 object MockWS {

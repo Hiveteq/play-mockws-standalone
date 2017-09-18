@@ -18,11 +18,11 @@ import scala.collection.JavaConverters._
 /**
  * A simulated response from the async-http-client.
  *
- * The [[play.api.libs.ws.ahc.AhcWSResponse]] is intended to wrap this.
+ * The [[play.api.libs.ws.ahc.StandaloneAhcWSResponse]] is intended to wrap this.
  *
  * Implementation is mostly based upon [[org.asynchttpclient.netty.NettyResponse]].
  *
- * We're faking at this level as opposed to the [[play.api.libs.ws.WSResponse]] level
+ * We're faking at this level as opposed to the [[play.api.libs.ws.StandaloneWSResponse]] level
  * to preserve any behavior specific to the NingWSResponse which is likely to be used
  * in the real (non-fake) WSClient.
  */

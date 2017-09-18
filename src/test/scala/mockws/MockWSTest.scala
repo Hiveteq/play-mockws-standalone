@@ -8,18 +8,24 @@ import org.mockito.Mockito._
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{FunSuite, Matchers}
 import play.api.http.HttpEntity
-import play.api.libs.json.Json
-import play.api.libs.ws.{WSAuthScheme, WSClient, WSResponse, WSSignatureCalculator}
+import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws.{StandaloneWSClient, StandaloneWSResponse, WSAuthScheme, WSSignatureCalculator}
 import play.api.mvc.Results._
 import play.api.mvc.Result
 import play.api.test.Helpers._
 import Helpers._
-import play.libs.ws.WSRequest
+import play.libs.ws.StandaloneWSRequest
 import play.shaded.ahc.org.asynchttpclient.Response
 
 import scala.collection.immutable.Seq
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.xml.Elem
+
+import play.api.libs.ws.XMLBodyReadables._
+
+import play.api.libs.ws.JsonBodyReadables._
+import play.api.libs.ws.JsonBodyWritables._
 
 /**
  * Tests that [[MockWS]] simulates a WS client
@@ -114,7 +120,7 @@ class MockWSTest extends FunSuite with Matchers with PropertyChecks {
 
     val wsResponse = await( ws.url("/json").get() )
     wsResponse.body shouldEqual """{"field":"value"}"""
-    (wsResponse.json \ "field").asOpt[String] shouldEqual Some("value")
+    (wsResponse.body[JsValue] \ "field").asOpt[String] shouldEqual Some("value")
     ws.close()
   }
 
@@ -128,7 +134,7 @@ class MockWSTest extends FunSuite with Matchers with PropertyChecks {
 
     val wsResponse = await( ws.url("/xml").get() )
     wsResponse.body shouldEqual "<foo><bar>value</bar></foo>"
-    (wsResponse.xml \ "bar").text shouldEqual "value"
+    (wsResponse.body[Elem] \ "bar").text shouldEqual "value"
     ws.close()
   }
 
@@ -224,14 +230,14 @@ class MockWSTest extends FunSuite with Matchers with PropertyChecks {
       case (PUT, "/put")       => Action { Ok("put ok") }
       case (DELETE, "/delete") => Action { Ok("delete ok") }
     }
-    
+
     await(ws.url("/get").withMethod("GET").execute()).body       shouldEqual "get ok"
     await(ws.url("/post").withMethod("POST").execute()).body     shouldEqual "post ok"
     await(ws.url("/put").withMethod("PUT").execute()).body       shouldEqual "put ok"
     await(ws.url("/delete").withMethod("DELETE").execute()).body shouldEqual "delete ok"
     ws.close()
   }
-  
+
   test("should not raise NullPointerExceptions on method chaining") {
     val ws = MockWS {
       case (GET, "/get") => Action { Ok("get ok") }
@@ -253,7 +259,7 @@ class MockWSTest extends FunSuite with Matchers with PropertyChecks {
       case (GET, "/get") => Action { Ok("get ok") }
     }
 
-    val request : Future[WSResponse] = ws
+    val request : Future[StandaloneWSResponse] = ws
       .url("/get")
       .sign(mock(classOf[WSSignatureCalculator]))
       .withVirtualHost("bla")
@@ -262,7 +268,7 @@ class MockWSTest extends FunSuite with Matchers with PropertyChecks {
       .get()
 
 
-    val response : WSResponse = await(request)
+    val response : StandaloneWSResponse = await(request)
 
     response.body shouldEqual "get ok"
 

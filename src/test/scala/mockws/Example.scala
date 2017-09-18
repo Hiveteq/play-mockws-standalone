@@ -2,7 +2,7 @@ package mockws
 
 import org.scalatest.{FreeSpec, Matchers, OptionValues}
 import scala.concurrent.ExecutionContext.Implicits._
-import play.api.libs.ws.WSClient
+import play.api.libs.ws.StandaloneWSClient
 import play.api.mvc.Results._
 import play.api.test.Helpers._
 import Helpers._
@@ -21,8 +21,8 @@ class Example extends FreeSpec with Matchers with OptionValues {
       val userServiceUrl = "http://userservice"
     }
 
-    /** @param ws [[WSClient]] as dependency injection */
-    class GatewayToTest(ws: WSClient) {
+    /** @param ws [[StandaloneWSClient]] as dependency injection */
+    class GatewayToTest(ws: StandaloneWSClient) {
 
       import GatewayToTest.userServiceUrl
 
