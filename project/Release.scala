@@ -9,12 +9,11 @@ object Release {
   val settings =
     Seq(
       releaseCrossBuild := true,
-
       sonatypeProfileName := "de.leanovate",
       publishMavenStyle := true,
-
+      publishTo := sonatypePublishTo.value,
       pomExtra := {
-        <url>https://github.com/leanovate/doby</url>
+        <url>https://github.com/leanovate/play-mockws</url>
           <licenses>
             <license>
               <name>MIT</name>
@@ -34,7 +33,6 @@ object Release {
             </developer>
           </developers>
       },
-
       releaseProcess := Seq[ReleaseStep](
         checkSnapshotDependencies,
         inquireVersions,

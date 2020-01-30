@@ -1,19 +1,25 @@
 package mockws
 
-import java.io.{ByteArrayInputStream, InputStream}
-import java.net.{Inet4Address, InetSocketAddress, SocketAddress}
+import java.io.ByteArrayInputStream
+import java.io.InputStream
+import java.net.Inet4Address
+import java.net.InetSocketAddress
+import java.net.SocketAddress
 import java.nio.ByteBuffer
 import java.nio.charset.Charset
 import java.util
 
 import play.api.mvc.Result
-import play.shaded.ahc.io.netty.handler.codec.http.{DefaultHttpHeaders, HttpHeaders, HttpResponseStatus}
+import play.shaded.ahc.io.netty.handler.codec.http.DefaultHttpHeaders
+import play.shaded.ahc.io.netty.handler.codec.http.HttpHeaders
+import play.shaded.ahc.io.netty.handler.codec.http.HttpResponseStatus
 import play.shaded.ahc.org.asynchttpclient.Response
-import play.shaded.ahc.org.asynchttpclient.cookie.{Cookie, CookieDecoder}
+import play.shaded.ahc.io.netty.handler.codec.http.cookie.Cookie
+import play.shaded.ahc.io.netty.handler.codec.http.cookie.DefaultCookie
 import play.shaded.ahc.org.asynchttpclient.uri.Uri
 import play.shaded.ahc.org.asynchttpclient.util.HttpUtils
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 /**
  * A simulated response from the async-http-client.
@@ -48,30 +54,32 @@ class FakeAhcResponse(result: Result, body: Array[Byte]) extends Response {
 
   override def getCookies: util.List[Cookie] = {
     val shouldCookieBeWrappedInQuotes = false
-    result.newCookies.map(playCookie => new Cookie(
-      playCookie.name,
-      playCookie.value,
-      shouldCookieBeWrappedInQuotes,
-      playCookie.domain.getOrElse(""),
-      playCookie.path,
-      playCookie.maxAge.map(_.toLong).getOrElse(0L),
-      playCookie.secure,
-      playCookie.httpOnly )
-    ).asJava
+    result.newCookies.map { playCookie =>
+      val cookie: Cookie = new DefaultCookie(playCookie.name, playCookie.value)
+      cookie.setWrap(shouldCookieBeWrappedInQuotes)
+      cookie.setDomain(playCookie.domain.getOrElse(""))
+      cookie.setPath(playCookie.path)
+      cookie.setMaxAge(playCookie.maxAge.map(_.toLong).getOrElse(0L))
+      cookie.setSecure(playCookie.secure)
+      cookie.setHttpOnly(playCookie.httpOnly)
+
+      cookie
+    }.asJava
   }
+
+  override def getHeader(name: CharSequence): String             = getHeaders.get(name)
+  override def getHeaders(name: CharSequence): util.List[String] = getHeaders.getAll(name)
 
   override def hasResponseBody: Boolean = body.nonEmpty
 
   override def getStatusText: String = HttpResponseStatus.valueOf(getStatusCode).toString
 
-  override def getHeaders(name: String): util.List[String] = getHeaders.getAll(name)
-
   override def getHeaders: HttpHeaders = {
     val scalaHeaders = FakeWSResponseHeaders.toMultiMap(result.header)
 
     val headers = new DefaultHttpHeaders()
-    scalaHeaders.foreach(e ⇒ headers.add(e._1, e._2.asJava))
-    result.body.contentType foreach (ct ⇒ headers.add("Content-Type", ct))
+    scalaHeaders.foreach(e => headers.add(e._1, e._2.asJava))
+    result.body.contentType.foreach(ct => headers.add("Content-Type", ct))
     headers
   }
 
@@ -85,8 +93,6 @@ class FakeAhcResponse(result: Result, body: Array[Byte]) extends Response {
 
   override def getUri: Uri = throw new NotImplementedError("unavailable here and unused by NingWSResponse")
 
-  override def getHeader(name: String): String = getHeaders.get(name)
-
   private def computeCharset(charset: Charset): Charset =
     Option(charset)
       .orElse(charsetFromContentType)
@@ -94,6 +100,6 @@ class FakeAhcResponse(result: Result, body: Array[Byte]) extends Response {
 
   private def charsetFromContentType: Option[Charset] =
     Option(getContentType)
-      .flatMap(ct => Option(HttpUtils.parseCharset(ct)))
+      .flatMap(ct => Option(HttpUtils.extractContentTypeCharsetAttribute(ct)))
 
 }

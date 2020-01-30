@@ -1,9 +1,53 @@
 # Release notes
 
-## 2.6.1-SNAPSHOT
+## 2.7.2-SNAPSHOT
+
+## 2.7.1
+
+- scala 2.13 support [64](https://github.com/leanovate/play-mockws/pull/64) (from [@avdv](https://github.com/avdv))
+- update dependencies [54](https://github.com/leanovate/play-mockws/pull/54)
+- sbt 1.2.8 [55](https://github.com/leanovate/play-mockws/pull/55)
+- sbt-sonatype 2.5 [56](https://github.com/leanovate/play-mockws/pull/56)
+- play 2.7.3 [60](https://github.com/leanovate/play-mockws/pull/60)
+
+## 2.7.0 - 2019/02/11
+
+- Compatibility with Play 2.7 [52](https://github.com/leanovate/play-mockws/pull/52)  
+  contribution from [@avdv](https://github.com/avdv)
+
+## 2.6.6 - 2018/06/25
+
+- can define behaviour when no route are found [35](https://github.com/leanovate/play-mockws/pull/35)  
+  Fix [issue #25](https://github.com/leanovate/play-mockws/issues/25)  
+  contribution from [@SahilLone](https://github.com/SahilLone)
+
+
+## 2.6.5 - 2018/03/09
+
+- Remove colon after 'Basic' in basic auth [37](https://github.com/leanovate/play-mockws/pull/37)  
+  contribution from [@mattrussell-sky](https://github.com/mattrussell-sky)
+
+## 2.6.4 - 2018/02/07
+
+- Fix regression in `withBodyAndContentType` where old headers are discarded [36](https://github.com/leanovate/play-mockws/pull/36)  
+  contribution from [@avdv](https://github.com/avdv)
+
+## 2.6.3 - 2017/12/22
+
+- Fix withHttpHeaders behavior for FakeWSRequestHolder [33](https://github.com/leanovate/play-mockws/pull/33)
+- Fix withQueryStringParameters behavior for FakeWSRequestHolder [34](https://github.com/leanovate/play-mockws/pull/34)  
+  contributions from [@a-shkarupin](https://github.com/a-shkarupin)
+
+## 2.6.2 - 2017/09/21
+
+- Do not use a shutdown hook with helpers trait [31](https://github.com/leanovate/play-mockws/pull/31)
+
+## 2.6.1 - 2017/09/21
 
 - Stop using deprecated actions [27](https://github.com/leanovate/play-mockws/issues/27)  
-  [contribution](https://github.com/leanovate/play-mockws/pull/28) from [1gnition](https://github.com/1gnition)
+  [contribution](https://github.com/leanovate/play-mockws/pull/28) from [@1gnition](https://github.com/1gnition)
+- Add helpers for users to avoid using deprecated `Action` [29](https://github.com/leanovate/play-mockws/issues/29)  
+  [contribution](https://github.com/leanovate/play-mockws/pull/30) from [@raphaelbauer](https://github.com/raphaelbauer)
 
 ## 2.6.0 - 2017/05/26
 
@@ -13,6 +57,10 @@
 
 - compatibility with play 2.6.0-M1 [#22](https://github.com/leanovate/play-mockws/pull/22)  
   contribution from [@domdorn](https://github.com/domdorn), with support from [@matsluni](https://github.com/matsluni)
+
+## 2.5.2 - 2019/05/17
+
+- update dependencies: https://github.com/leanovate/play-mockws/compare/v2.5.1...v2.5.2
 
 ## 2.5.1 - 2016/11/03
 

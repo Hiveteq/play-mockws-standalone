@@ -3,15 +3,17 @@ package mockws
 import java.util.concurrent.TimeoutException
 
 import org.scalatest.concurrent.ScalaFutures._
-import org.scalatest.time.{Milliseconds, Span}
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.time.Milliseconds
+import org.scalatest.time.Span
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.FunSuite
+import org.scalatest.Matchers
 import play.api.mvc.Result
-import Helpers._
 
 import scala.concurrent.Promise
 import scala.concurrent.duration._
 
-class TimeoutTest extends FunSuite with Matchers {
+class TimeoutTest extends FunSuite with Matchers with MockWSHelpers with BeforeAndAfterAll {
 
   /**
    * Given a route that hangs forever, a request timeout of 1 ms should fail the future within 500 ms.
@@ -29,4 +31,9 @@ class TimeoutTest extends FunSuite with Matchers {
 
     ws.close()
   }
+
+  override def afterAll(): Unit = {
+    shutdownHelpers()
+  }
+
 }

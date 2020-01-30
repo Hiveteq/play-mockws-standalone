@@ -1,8 +1,17 @@
 // Comment to get more information during initialization
 logLevel := Level.Warn
 
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.0")
+// https://github.com/scoverage/sbt-scoverage/releases
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.6.1")
 
-addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.1.0")
+// https://github.com/scoverage/sbt-coveralls/releases
+addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.2.7")
 
-addSbtPlugin("com.codacy" % "sbt-codacy-coverage" % "1.3.6")
+// https://github.com/codacy/sbt-codacy-coverage/releases
+addSbtPlugin("com.codacy" % "sbt-codacy-coverage" % "1.3.17")
+
+// https://github.com/scalameta/scalafmt
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.3.0")
+
+// https://github.com/dwijnand/sbt-travisci
+addSbtPlugin("com.dwijnand" % "sbt-travisci" % "1.2.0")
