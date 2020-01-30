@@ -21,6 +21,7 @@ import scala.collection.immutable.Seq
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.xml.Elem
+import play.api.libs.ws.DefaultBodyWritables._
 import play.api.libs.ws.XMLBodyReadables._
 import play.api.libs.ws.JsonBodyReadables._
 import play.api.libs.ws.JsonBodyWritables._
