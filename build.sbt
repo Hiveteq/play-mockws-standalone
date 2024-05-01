@@ -1,10 +1,20 @@
 import scala.collection.immutable
 
-ThisBuild / organization := "io.github.sdudzin.play"
+ThisBuild / organization := "io.github.hiveteq.play"
 
 // Those are mandatory for the release to Sonatype
-ThisBuild / homepage := Some(url("https://github.com/sdudzin/play-mockws-standalone"))
+ThisBuild / homepage := Some(url("https://github.com/hiveteq/play-mockws-standalone"))
 ThisBuild / licenses := List("MIT" -> url("http://opensource.org/licenses/MIT"))
+ThisBuild / developers := List(
+  Developer(
+    "sdudzin",
+    "Siarhei Dudzin",
+    "",
+    url("https://hiveteq.github.io")
+  )
+)
+ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
+sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
 val playWsStandaloneVersion = "3.0.2"
 
@@ -58,4 +68,4 @@ lazy val play30 = (project in file("play-mockws-standalone"))
   )
 
 // Sonatype profile for releases (otherwise it uses the organization name)
-sonatypeProfileName := "io.github.sdudzin"
+sonatypeProfileName := "io.github.hiveteq"
