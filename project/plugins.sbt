@@ -2,16 +2,20 @@
 logLevel := Level.Warn
 
 // https://github.com/scoverage/sbt-scoverage/releases
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.6.1")
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.0.11")
 
 // https://github.com/scoverage/sbt-coveralls/releases
-addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.2.7")
+addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.3.11")
 
 // https://github.com/codacy/sbt-codacy-coverage/releases
-addSbtPlugin("com.codacy" % "sbt-codacy-coverage" % "1.3.17")
+addSbtPlugin("com.codacy" % "sbt-codacy-coverage" % "3.0.3")
 
 // https://github.com/scalameta/scalafmt
-addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.3.0")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
 
-// https://github.com/dwijnand/sbt-travisci
-addSbtPlugin("com.dwijnand" % "sbt-travisci" % "1.2.0")
+// https://github.com/sbt/sbt-ci-release
+addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.5.12")
+
+// Scoverage coverage-parser relies on version 1.x
+// scala-xml 2.0 is most of the time non breaking
+libraryDependencySchemes += "org.scala-lang.modules" %% "scala-xml" % VersionScheme.Always

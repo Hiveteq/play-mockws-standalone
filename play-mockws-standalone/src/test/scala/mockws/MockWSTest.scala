@@ -2,11 +2,10 @@ package mockws
 
 import java.net.InetSocketAddress
 import java.util.concurrent.atomic.AtomicReference
-
 import mockws.MockWSHelpers._
 import org.mockito.Mockito._
-import org.scalatest.FunSuite
-import org.scalatest.Matchers
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.http.Status
 import play.api.libs.json.{JsValue, Json}
@@ -17,7 +16,6 @@ import play.api.mvc.Result
 import play.api.mvc.Results._
 import play.api.test.Helpers._
 
-import scala.collection.immutable.Seq
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.xml.Elem
@@ -29,7 +27,7 @@ import play.api.libs.ws.JsonBodyWritables._
 /**
  * Tests that [[MockWS]] simulates a WS client
  */
-class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
+class MockWSTest extends AnyFunSuite with Matchers with ScalaCheckPropertyChecks {
 
   test("mock WS simulates all HTTP methods") {
     val ws = MockWS {
@@ -62,22 +60,20 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
   }
 
   test("mock WS works with explicit request") {
-    val ws = MockWS {
-      case (GET, "/blah") =>
-        Action { request =>
-          Ok(request.method)
-        }
+    val ws = MockWS { case (GET, "/blah") =>
+      Action { request =>
+        Ok(request.method)
+      }
     }
     await(ws.url("/blah").get()).status shouldEqual OK
     ws.close()
   }
 
   test("mock WS simulates a POST with a JSON payload") {
-    val ws = MockWS {
-      case (POST, "/") =>
-        Action { request =>
-          Ok((request.body.asJson.get \ "result").as[String])
-        }
+    val ws = MockWS { case (POST, "/") =>
+      Action { request =>
+        Ok((request.body.asJson.get \ "result").as[String])
+      }
     }
 
     val json = Json.parse("""{"result": "OK"}""")
@@ -89,11 +85,10 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
   }
 
   test("mock WS simulates a POST with a JSON payload with a custom content type") {
-    val ws = MockWS {
-      case (POST, "/") =>
-        Action(BodyParser.tolerantJson) { request =>
-          Ok((request.body \ "result").as[String])
-        }
+    val ws = MockWS { case (POST, "/") =>
+      Action(BodyParser.tolerantJson) { request =>
+        Ok((request.body \ "result").as[String])
+      }
     }
 
     val json = Json.parse("""{"result": "OK"}""")
@@ -119,11 +114,10 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
   }
 
   test("mock WS can produce JSON") {
-    val ws = MockWS {
-      case (GET, "/json") =>
-        Action {
-          Ok(Json.obj("field" -> "value"))
-        }
+    val ws = MockWS { case (GET, "/json") =>
+      Action {
+        Ok(Json.obj("field" -> "value"))
+      }
     }
 
     val wsResponse = await(ws.url("/json").get())
@@ -133,11 +127,10 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
   }
 
   test("mock WS can produce XML") {
-    val ws = MockWS {
-      case (GET, "/xml") =>
-        Action {
-          Ok(<foo><bar>value</bar></foo>)
-        }
+    val ws = MockWS { case (GET, "/xml") =>
+      Action {
+        Ok(<foo><bar>value</bar></foo>)
+      }
     }
 
     val wsResponse = await(ws.url("/xml").get())
@@ -147,8 +140,8 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
   }
 
   test("a call to an unknown route produces default not found") {
-    val ws = MockWS {
-      case (GET, "/url") => Action { Ok("") }
+    val ws = MockWS { case (GET, "/url") =>
+      Action { Ok("") }
     }
     await(ws.url("/url2").get()).status should be(Status.NOT_FOUND)
     await(ws.url("/url").get()).status should be(Status.OK)
@@ -158,8 +151,8 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
   test("a call to an unknown route produces implicit behaviour") {
 
     implicit val notDefinedBehaviour = RouteNotDefined(BadGateway)
-    val ws = MockWS {
-      case (GET, "/url") => Action { Ok("") }
+    val ws = MockWS { case (GET, "/url") =>
+      Action { Ok("") }
     }
     await(ws.url("/url2").get()).status should be(Status.BAD_GATEWAY)
     await(ws.url("/url").get()).status should be(Status.OK)
@@ -167,11 +160,10 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
   }
 
   test("mock WS supports custom response content types") {
-    val ws = MockWS {
-      case (_, _) =>
-        Action {
-          Ok("hello").as("hello/world")
-        }
+    val ws = MockWS { case (_, _) =>
+      Action {
+        Ok("hello").as("hello/world")
+      }
     }
 
     val wsResponse = await(ws.url("/").get())
@@ -182,17 +174,16 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
   }
 
   test("mock WS supports custom request content types") {
-    val ws = MockWS {
-      case (_, _) =>
-        Action { request =>
-          request.contentType match {
-            case Some(ct) => Ok(ct)
-            case None     => BadRequest("no content type")
-          }
+    val ws = MockWS { case (_, _) =>
+      Action { request =>
+        request.contentType match {
+          case Some(ct) => Ok(ct)
+          case None     => BadRequest("no content type")
         }
+      }
     }
 
-    val wsResponse = await(ws.url("/").addHttpHeaders(CONTENT_TYPE -> "hello/world").get)
+    val wsResponse = await(ws.url("/").addHttpHeaders(CONTENT_TYPE -> "hello/world").get())
     wsResponse.status shouldEqual OK
     wsResponse.body shouldEqual "hello/world"
     ws.close()
@@ -202,16 +193,15 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
     forAll { (q: String, v: String) =>
       whenever(q.nonEmpty) {
 
-        val ws = MockWS {
-          case (GET, "/uri") =>
-            Action { request =>
-              request.getQueryString(q).fold[Result](NotFound) { id =>
-                Ok(id)
-              }
+        val ws = MockWS { case (GET, "/uri") =>
+          Action { request =>
+            request.getQueryString(q).fold[Result](NotFound) { id =>
+              Ok(id)
             }
+          }
         }
 
-        val wsResponse = await(ws.url("/uri").addQueryStringParameters(q -> v).get)
+        val wsResponse = await(ws.url("/uri").addQueryStringParameters(q -> v).get())
         wsResponse.status shouldEqual OK
         wsResponse.body shouldEqual v
         ws.close()
@@ -223,17 +213,16 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
     forAll { (q: String, v: String) =>
       whenever(q.nonEmpty) {
 
-        val ws = MockWS {
-          case (GET, "/uri") =>
-            Action { request =>
-              request.getQueryString(q).fold[Result](NotFound) { id =>
-                Ok(id)
-              }
+        val ws = MockWS { case (GET, "/uri") =>
+          Action { request =>
+            request.getQueryString(q).fold[Result](NotFound) { id =>
+              Ok(id)
             }
+          }
         }
 
-        await(ws.url("/uri").addHttpHeaders(Seq(q           -> v): _*).get)
-        await(ws.url("/uri").addQueryStringParameters(Seq(q -> v): _*).get)
+        await(ws.url("/uri").addHttpHeaders(Seq(q -> v): _*).get())
+        await(ws.url("/uri").addQueryStringParameters(Seq(q -> v): _*).get())
         ws.close()
       }
     }
@@ -255,8 +244,8 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
   }
 
   test("should not raise NullPointerExceptions on method chaining") {
-    val ws = MockWS {
-      case (GET, "/get") => Action { Ok("get ok") }
+    val ws = MockWS { case (GET, "/get") =>
+      Action { Ok("get ok") }
     }
 
     await(
@@ -272,8 +261,8 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
   }
 
   test("should not raise Exceptions when asking for the used sockets") {
-    val ws = MockWS {
-      case (GET, "/get") => Action { Ok("get ok") }
+    val ws = MockWS { case (GET, "/get") =>
+      Action { Ok("get ok") }
     }
 
     val request : Future[StandaloneWSResponse] = ws
@@ -297,11 +286,10 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
   }
 
   test("multiple headers with same name should be retained & merged correctly") {
-    val ws = MockWS {
-      case (GET, "/get") =>
-        Action { req =>
-          Ok(req.headers.getAll("v1").zipWithIndex.toString)
-        }
+    val ws = MockWS { case (GET, "/get") =>
+      Action { req =>
+        Ok(req.headers.getAll("v1").zipWithIndex.toString)
+      }
     }
     val request = ws
       .url("/get")
@@ -316,12 +304,11 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
 
   test("discard old headers when setting withHttpHeaders") {
     val headers = new AtomicReference[Map[String, scala.Seq[String]]](Map.empty)
-    val ws = MockWS {
-      case (GET, "/get") =>
-        Action { req =>
-          headers.set(req.headers.toMap)
-          Ok(req.headers.getAll("key1").zipWithIndex.toString)
-        }
+    val ws = MockWS { case (GET, "/get") =>
+      Action { req =>
+        headers.set(req.headers.toMap)
+        Ok(req.headers.getAll("key1").zipWithIndex.toString)
+      }
     }
     val request = ws
       .url("/get")
@@ -337,12 +324,11 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
 
   test("discard old query parameters when setting withQueryStringParameters") {
     val queryString = new AtomicReference[Map[String, scala.Seq[String]]](Map.empty)
-    val ws = MockWS {
-      case (GET, "/get") =>
-        Action { req =>
-          queryString.set(req.queryString)
-          Ok("")
-        }
+    val ws = MockWS { case (GET, "/get") =>
+      Action { req =>
+        queryString.set(req.queryString)
+        Ok("")
+      }
     }
     val request = ws
       .url("/get")
@@ -357,12 +343,11 @@ class MockWSTest extends FunSuite with Matchers with ScalaCheckPropertyChecks {
 
   test("keep headers with content type from BodyWritable") {
     val headers = new AtomicReference[Map[String, scala.Seq[String]]](Map.empty)
-    val ws = MockWS {
-      case (POST, "/") =>
-        Action { req =>
-          headers.set(req.headers.toMap)
-          Ok
-        }
+    val ws = MockWS { case (POST, "/") =>
+      Action { req =>
+        headers.set(req.headers.toMap)
+        Ok
+      }
     }
     val request = ws
       .url("/")

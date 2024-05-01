@@ -4,22 +4,22 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 import mockws.MockWSHelpers._
-import org.scalatest.FunSuite
-import org.scalatest.Matchers
 import play.api.mvc.Results._
 import play.api.test.Helpers._
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
 /**
  * Tests [[Route]]
  */
-class RouteTest extends FunSuite with Matchers {
+class RouteTest extends AnyFunSuite with Matchers {
 
   test("a route knows if it was called") {
-    val route1 = Route {
-      case (GET, "/route1") => Action { Ok("") }
+    val route1 = Route { case (GET, "/route1") =>
+      Action { Ok("") }
     }
-    val route2 = Route {
-      case (GET, "/route2") => Action { Ok("") }
+    val route2 = Route { case (GET, "/route2") =>
+      Action { Ok("") }
     }
 
     val ws = MockWS(route1.orElse(route2))
@@ -37,8 +37,8 @@ class RouteTest extends FunSuite with Matchers {
   }
 
   test("a route knows how many times it was called") {
-    val route = Route {
-      case (GET, "/route") => Action { Ok("") }
+    val route = Route { case (GET, "/route") =>
+      Action { Ok("") }
     }
     val ws = MockWS(route)
 
@@ -56,8 +56,8 @@ class RouteTest extends FunSuite with Matchers {
   }
 
   test("a route knows how many times it was called with parallel calls") {
-    val route = Route {
-      case (GET, "/route") => Action { Ok("") }
+    val route = Route { case (GET, "/route") =>
+      Action { Ok("") }
     }
     val ws = MockWS(route)
 

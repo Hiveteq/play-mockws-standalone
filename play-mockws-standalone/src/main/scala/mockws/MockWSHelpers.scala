@@ -1,8 +1,8 @@
 package mockws
 
-import akka.actor
-import akka.actor.ActorSystem
-import akka.stream.Materializer
+import org.apache.pekko.actor
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.stream.Materializer
 import play.api.mvc.DefaultActionBuilder
 import play.api.mvc.PlayBodyParsers
 
@@ -30,7 +30,6 @@ import scala.concurrent.duration._
  *   }
  * }
  * }}}
- *
  */
 trait MockWSHelpers {
   private val actorSystem: ActorSystem    = actor.ActorSystem("unit-testing")

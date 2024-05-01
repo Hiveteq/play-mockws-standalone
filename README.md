@@ -1,87 +1,74 @@
-Table of Contents
+Play MockWS Standalone
 =================
 
-* [Introduction](#play-mockws)
-* [Release notes](#release-notes)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.sdudzin.play-mockws-standalone/play-mockws-3-0_2/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.sdudzin.play-mockws-standalone/play-mockws-3-0_2)
+
+* [Goal](#goal)
 * [Simple example](#example)
 * [Adding play-mockws to your project](#adding-play-mockws-to-your-project)
+  * [Compatibility matrix](#compatibility-matrix)
+  * [play-mockws 3+](#play-mockws-3)
+  * [play-mockws 2.x](#play-mockws-2x)
 * [Usage](#usage)
-* [Compatibility matrix](#compatibility-matrix)
+  * [General usage](#general-usage) 
+  * [Controlling the routes](#controlling-the-routes) 
+* [Release notes](#release-notes)
 
-## play-mockws
+## Goal
 
-[![Build Status](https://travis-ci.org/leanovate/play-mockws.svg?branch=master)](https://travis-ci.org/leanovate/play-mockws)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a7f45a8cbd2a4085ac03ff8c163e3394)](https://app.codacy.com/app/yann-simon-fr/play-mockws?utm_source=github.com&utm_medium=referral&utm_content=leanovate/play-mockws&utm_campaign=Badge_Grade_Dashboard)
-[![Coverage Status](https://coveralls.io/repos/github/leanovate/play-mockws/badge.svg)](https://coveralls.io/github/leanovate/play-mockws)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.leanovate.play-mockws/play-mockws_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.leanovate.play-mockws/play-mockws_2.11)
-
-Play MockWS is a mock WS client for Play Framework.
+Play MockWS Standalone is a mock WS Standalone client for Play Framework.
 
 If:
+
 - you write an application in Scala with the [Play Framework](https://playframework.com/)
-- the application makes HTTP calls to external web services with the [WS client](https://www.playframework.com/documentation/latest/ScalaWS)
+- the application makes HTTP calls to external web services with
+  the [WS client](https://www.playframework.com/documentation/latest/ScalaWS)
 - you want to test your implementation
 
-then you can use `play-mockws` to simulate HTTP requests to external web services in your tests.
-
-## Release Notes
-
-see [RELEASE-NOTES.md](RELEASE-NOTES.md)
+then you can use Play MockWS Standalone to simulate HTTP requests to external web services in your tests.
 
 ## Example
 
 ```scala
 // simulation of a GET request to http://dns/url
 val ws = MockWS {
-  case (GET, "http://dns/url") => Action { Ok("http response") }
+  case (GET, "http://dns/url") => Action {
+    Ok("http response")
+  }
 }
 
 await(ws.url("http://dns/url").get()).body == "http response"
 ```
 
-## Adding play-mockws to your project
+## Adding play-mockws-standalone to your project
 
-Add MockWS as test dependency in the `build.sbt`:
+Add MockWS Standalone as test dependency in the `build.sbt`.
 
-* for Play 2.7.x:
-```scala
-libraryDependencies += "de.leanovate.play-mockws" %% "play-mockws" % "2.7.1" % Test
-```
-* for Play 2.6.x:
-```scala
-libraryDependencies += "de.leanovate.play-mockws" %% "play-mockws" % "2.6.6" % Test
-```
-* for Play 2.5.x:
-```scala
-libraryDependencies += "de.leanovate.play-mockws" %% "play-mockws" % "2.5.2" % Test
-```
-* for Play 2.4.x:
-```scala
-libraryDependencies += "de.leanovate.play-mockws" %% "play-mockws" % "2.4.2" % Test
-```
-* for Play 2.3.x:
-```scala
-libraryDependencies += "de.leanovate.play-mockws" %% "play-mockws" % "2.3.2" % Test
-```
+### Compatibility Matrix
 
+At the moment only Play 3.x is supported
 
-And use it:
+| play-mock-ws version | Play versions | Scala versions |
+|----------------------|---------------|----------------|
+| 3.0.x                | 3.0           | 2.13, 3.3      |
+
+### play-mockws 3+
+
 ```scala
-import mockws.MockWS
-
-val ws = MockWS { ... }
+libraryDependencies += "io.github.hiveteq.play-mockws-standalone" %% "play-mockws-standalone" % "3.0.2" % Test
 ```
 
 ## Usage
 
-##### General usage
+### General usage
 
-From the 2.6 version, it is recommended that your tests either extend trait MockWSHelpers or import MockWSHelpers. MockWSHelpers
+It is recommended that your tests either extend trait MockWSHelpers or import MockWSHelpers.
+MockWSHelpers
 provides an implicit Materializer you need when working with Play's Actions.
 
 ```scala
 class MySpec extends FreeSpec with Matchers with MockWSHelpers with BeforeAndAfterAll {
-  ...
+...
 
   override def afterAll(): Unit = {
     shutdownHelpers()
@@ -90,36 +77,49 @@ class MySpec extends FreeSpec with Matchers with MockWSHelpers with BeforeAndAft
 ```
 
 or
+
 ```scala
 import mockws.MockWSHelpers._
 ```
 
 A `MockWS` instance can be directly constructed with a partial function like this:
+
 ```scala
 val ws = MockWS {
-  case (GET, "/") => Action { Ok("homepage") }
+  case (GET, "/") => Action {
+    Ok("homepage")
+  }
   case (POST, "/users") => Action { request => Created((request.body.asJson.get \ "id").as[String]) }
-  case (GET, "/users/24") => Action { NotFound("") }
+  case (GET, "/users/24") => Action {
+    NotFound("")
+  }
 }
 ```
-The partial function binds 2 Strings, an HTTP method and the URL, to a Play [Action](https://www.playframework.com/documentation/latest/ScalaActions).
+
+The partial function binds 2 Strings, an HTTP method and the URL, to a
+Play [Action](https://www.playframework.com/documentation/latest/ScalaActions).
 
 For clarity, this partial function is aliased as [MockWS.Routes](src/main/scala/mockws/MockWS.scala)
 
 When calling MockWS.url(), if the HTTP method and the URL are found, the defined play action is evaluated.
 
-##### Controlling the routes
+### Controlling the routes
 
-If you want more control on the routes, for example to know whether a route was called or how many times, use the [Route](src/main/scala/mockws/Route.scala) class for this.
+If you want more control on the routes, for example to know whether a route was called or how many times, use
+the [Route](src/main/scala/mockws/Route.scala) class for this.
 
 Routes can be defined together with the standard function `orElse`.
 
 ```scala
 val route1 = Route {
-  case (GET, "/route1") => Action { Ok("") }
+  case (GET, "/route1") => Action {
+    Ok("")
+  }
 }
 val route2 = Route {
-  case (GET, "/route2") => Action { Ok("") }
+  case (GET, "/route2") => Action {
+    Ok("")
+  }
 }
 
 val ws = MockWS(route1 orElse route2)
@@ -133,13 +133,11 @@ route1.timeCalled == 1
 route2.timeCalled == 0
 ```
 
-An example how to structure an implementation to test it with MockWS can be found [here](src/test/scala/mockws/Example.scala).
+An example how to structure an implementation to test it with MockWS can be
+found [here](src/test/scala/mockws/Example.scala).
 
 Other examples can be found in the [tests](src/test/scala/mockws/).
 
-## Compatibility Matrix
+## Release notes
 
-- MockWS 2.6.x is actually only compatible with Play 2.6.y., with Scala 2.12 or 2.11.
-- MockWS 2.5.x is actually only compatible with Play 2.5.y., with Scala 2.11.
-- MockWS 2.4.x is actually only compatible with Play 2.4.y., with Scala 2.10 or 2.11.
-- MockWS 2.3.x is actually only compatible with Play 2.3.y., with Scala 2.10 or 2.11.
+See [RELEASE-NOTES.md](RELEASE-NOTES.md) or [GitHub releases](https://github.com/hiveteq/play-mockws-standalone/releases).
