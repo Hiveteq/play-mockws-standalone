@@ -7,8 +7,7 @@ Play MockWS Standalone
 * [Simple example](#example)
 * [Adding play-mockws to your project](#adding-play-mockws-to-your-project)
   * [Compatibility matrix](#compatibility-matrix)
-  * [play-mockws 3+](#play-mockws-3)
-  * [play-mockws 2.x](#play-mockws-2x)
+  * [play-mockws](#play-mockws)
 * [Usage](#usage)
   * [General usage](#general-usage) 
   * [Controlling the routes](#controlling-the-routes) 
@@ -17,6 +16,7 @@ Play MockWS Standalone
 ## Goal
 
 Play MockWS Standalone is a mock WS Standalone client for Play Framework.
+This is a fork of a [regular Mock WS library](https://github.com/leanovate/play-mockws) that is not designed to work with Standalone WS Client.
 
 If:
 
@@ -52,7 +52,7 @@ At the moment only Play 3.x is supported
 |----------------------|---------------|----------------|
 | 3.0.x                | 3.0           | 2.13, 3.3      |
 
-### play-mockws 3+
+### play-mockws
 
 ```scala
 libraryDependencies += "io.github.hiveteq.play-mockws-standalone" %% "play-mockws-standalone" % "3.0.2" % Test
