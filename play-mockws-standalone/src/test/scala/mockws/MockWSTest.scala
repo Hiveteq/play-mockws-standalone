@@ -8,7 +8,8 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.http.Status
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.JsValue
+import play.api.libs.json.Json
 import play.api.libs.ws.WSAuthScheme
 import play.api.libs.ws.StandaloneWSResponse
 import play.api.libs.ws.WSSignatureCalculator
@@ -265,7 +266,7 @@ class MockWSTest extends AnyFunSuite with Matchers with ScalaCheckPropertyChecks
       Action { Ok("get ok") }
     }
 
-    val request : Future[StandaloneWSResponse] = ws
+    val request: Future[StandaloneWSResponse] = ws
       .url("/get")
       .sign(mock(classOf[WSSignatureCalculator]))
       .withVirtualHost("bla")
@@ -273,7 +274,7 @@ class MockWSTest extends AnyFunSuite with Matchers with ScalaCheckPropertyChecks
       .withRequestTimeout(10.millis)
       .get()
 
-    val response : StandaloneWSResponse = await(request)
+    val response: StandaloneWSResponse = await(request)
 
     response.body shouldEqual "get ok"
 

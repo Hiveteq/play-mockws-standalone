@@ -11,7 +11,8 @@ import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.shaded.ahc.io.netty.handler.codec.http.HttpHeaders
 
-import java.net.{URI, URLEncoder}
+import java.net.URI
+import java.net.URLEncoder
 import java.util.Base64
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
