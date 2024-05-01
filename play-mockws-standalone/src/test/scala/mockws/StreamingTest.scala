@@ -95,6 +95,8 @@ class StreamingTest extends AnyFunSuite with Matchers with ScalaCheckPropertyChe
       }
     }
 
+    import play.api.libs.ws.DefaultBodyReadables.readableAsString
+
     await(
       ws.url("/get")
         .get()

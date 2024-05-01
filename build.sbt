@@ -31,10 +31,8 @@ def scalaCollectionsCompat(scalaVersion: String): immutable.Seq[ModuleID] = {
 val scala213 = "2.13.13"
 val scala3   = "3.3.3"
 
-ThisBuild / scalaVersion := scala213
-
+ThisBuild / scalaVersion := scala3
 ThisBuild / fork := true
-
 ThisBuild / resolvers += "Typesafe repository".at("https://repo.typesafe.com/typesafe/releases/")
 
 lazy val root = (project in file("."))

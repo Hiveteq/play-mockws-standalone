@@ -20,10 +20,10 @@ import play.api.test.Helpers._
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.xml.Elem
-import play.api.libs.ws.DefaultBodyWritables._
-import play.api.libs.ws.XMLBodyReadables._
-import play.api.libs.ws.JsonBodyReadables._
-import play.api.libs.ws.JsonBodyWritables._
+import play.api.libs.ws.DefaultBodyWritables.writeableOf_String
+import play.api.libs.ws.JsonBodyWritables.writeableOf_JsValue
+import play.api.libs.ws.DefaultBodyReadables.readableAsString
+//import play.api.libs.ws.JsonBodyReadables.readableAsJson
 
 /**
  * Tests that [[MockWS]] simulates a WS client
@@ -123,6 +123,7 @@ class MockWSTest extends AnyFunSuite with Matchers with ScalaCheckPropertyChecks
 
     val wsResponse = await(ws.url("/json").get())
     wsResponse.body shouldEqual """{"field":"value"}"""
+    import play.api.libs.ws.JsonBodyReadables.readableAsJson
     (wsResponse.body[JsValue] \ "field").asOpt[String] shouldEqual Some("value")
     ws.close()
   }
@@ -136,6 +137,7 @@ class MockWSTest extends AnyFunSuite with Matchers with ScalaCheckPropertyChecks
 
     val wsResponse = await(ws.url("/xml").get())
     wsResponse.body shouldEqual "<foo><bar>value</bar></foo>"
+    import play.api.libs.ws.XMLBodyReadables.readableAsXml
     (wsResponse.body[Elem] \ "bar").text shouldEqual "value"
     ws.close()
   }
