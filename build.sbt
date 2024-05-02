@@ -1,5 +1,6 @@
 import scala.collection.immutable
 
+
 ThisBuild / organization := "io.github.hiveteq.play"
 
 // Those are mandatory for the release to Sonatype
@@ -15,6 +16,9 @@ ThisBuild / developers := List(
 )
 ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
 sonatypeRepository                 := "https://s01.oss.sonatype.org/service/local"
+
+// GPG signing
+usePgpKeyHex("3B3697C72B4D7CAA458E232D3759F1DA9FA19F17")
 
 val playWsStandaloneVersion = "3.0.2"
 
