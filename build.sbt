@@ -1,6 +1,5 @@
 import scala.collection.immutable
 
-
 ThisBuild / organization := "io.github.hiveteq.play"
 
 // Those are mandatory for the release to Sonatype
