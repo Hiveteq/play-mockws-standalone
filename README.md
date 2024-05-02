@@ -1,7 +1,7 @@
 Play MockWS Standalone
 =================
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.sdudzin.play-mockws-standalone/play-mockws-3-0_2/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.sdudzin.play-mockws-standalone/play-mockws-3-0_2)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.hiveteq.play/play-mockws-standalone_3/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.hiveteq.play/play-mockws-standalone_3/)
 
 * [Goal](#goal)
 * [Simple example](#example)
