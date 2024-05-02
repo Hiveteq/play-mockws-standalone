@@ -1,6 +1,6 @@
 Play MockWS Standalone
 =================
-
+![CI Workflow](https://github.com/hiveteq/play-mockws-standalone/actions/workflows/ci.yml/badge.svg)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.hiveteq.play/play-mockws-standalone_3/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.hiveteq.play/play-mockws-standalone_3/)
 
 * [Goal](#goal)
@@ -55,7 +55,7 @@ At the moment only Play 3.x is supported
 ### play-mockws
 
 ```scala
-libraryDependencies += "io.github.hiveteq.play-mockws-standalone" %% "play-mockws-standalone" % "3.0.2" % Test
+libraryDependencies += "io.github.hiveteq.play-mockws-standalone" %% "play-mockws-standalone" % "3.0.4" % Test
 ```
 
 ## Usage
