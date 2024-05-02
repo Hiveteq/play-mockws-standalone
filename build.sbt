@@ -14,7 +14,7 @@ ThisBuild / developers := List(
   )
 )
 ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
-sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
+sonatypeRepository                 := "https://s01.oss.sonatype.org/service/local"
 
 val playWsStandaloneVersion = "3.0.2"
 
