@@ -19,7 +19,7 @@ sonatypeRepository                 := "https://s01.oss.sonatype.org/service/loca
 // GPG signing
 usePgpKeyHex("3B3697C72B4D7CAA458E232D3759F1DA9FA19F17")
 
-val playWsStandaloneVersion = "3.0.2"
+val playWsStandaloneVersion = "3.0.3"
 
 fork := true
 
