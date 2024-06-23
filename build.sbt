@@ -26,7 +26,7 @@ fork := true
 val playVersion = "3.0.4"
 
 lazy val testDependencies: Seq[ModuleID] = Seq(
-  "org.scalatest"     %% "scalatest"       % "3.2.18",
+  "org.scalatest"     %% "scalatest"       % "3.2.19",
   "org.scalatestplus" %% "scalacheck-1-15" % "3.2.11.0",
   "org.scalacheck"    %% "scalacheck"      % "1.18.0",
   "org.mockito"        % "mockito-core"    % "5.12.0"
