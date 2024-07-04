@@ -2,7 +2,7 @@
 logLevel := Level.Warn
 
 // https://github.com/scoverage/sbt-scoverage/releases
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.0.11")
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.1.0")
 
 // https://github.com/scoverage/sbt-coveralls/releases
 addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.3.11")
@@ -20,6 +20,9 @@ addDependencyTreePlugin
 
 // https://github.com/aiyanbo/sbt-dependency-updates
 addSbtPlugin("org.jmotor.sbt" % "sbt-dependency-updates" % "1.2.9")
+
+// needed until https://github.com/sbt/sbt-ci-release/pull/298 is merged
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.11.0")
 
 // Scoverage coverage-parser relies on version 1.x
 // scala-xml 2.0 is most of the time non breaking
