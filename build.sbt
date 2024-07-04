@@ -19,15 +19,14 @@ sonatypeRepository                 := "https://s01.oss.sonatype.org/service/loca
 // GPG signing
 usePgpKeyHex("3B3697C72B4D7CAA458E232D3759F1DA9FA19F17")
 
-val playWsStandaloneVersion = "3.0.4"
-
 fork := true
 
 val playVersion = "3.0.4"
+val playWsStandaloneVersion = "3.0.4"
 
 lazy val testDependencies: Seq[ModuleID] = Seq(
   "org.scalatest"     %% "scalatest"       % "3.2.19",
-  "org.scalatestplus" %% "scalacheck-1-15" % "3.2.11.0",
+  "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0",
   "org.scalacheck"    %% "scalacheck"      % "1.18.0",
   "org.mockito"        % "mockito-core"    % "5.12.0"
 ).map(_ % Test)

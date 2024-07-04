@@ -16,6 +16,11 @@ addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
 // https://github.com/sbt/sbt-ci-release
 addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.5.12")
 
+addDependencyTreePlugin
+
+// https://github.com/aiyanbo/sbt-dependency-updates
+addSbtPlugin("org.jmotor.sbt" % "sbt-dependency-updates" % "1.2.9")
+
 // Scoverage coverage-parser relies on version 1.x
 // scala-xml 2.0 is most of the time non breaking
 libraryDependencySchemes += "org.scala-lang.modules" %% "scala-xml" % VersionScheme.Always
