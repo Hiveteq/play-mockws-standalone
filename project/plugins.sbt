@@ -16,6 +16,7 @@ addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
 // https://github.com/sbt/sbt-ci-release
 addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.5.12")
 
+// needed until https://github.com/sbt/sbt-ci-release/pull/298 is merged
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.11.0")
 
 // Scoverage coverage-parser relies on version 1.x
