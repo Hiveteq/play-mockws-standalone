@@ -16,6 +16,7 @@ ThisBuild / developers := List(
 
 import xerial.sbt.Sonatype.sonatypeCentralHost
 ThisBuild / sonatypeCredentialHost := sonatypeCentralHost
+publishTo := sonatypePublishToBundle.value
 
 // GPG signing
 usePgpKeyHex("3B3697C72B4D7CAA458E232D3759F1DA9FA19F17")
