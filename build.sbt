@@ -22,7 +22,7 @@ usePgpKeyHex("3B3697C72B4D7CAA458E232D3759F1DA9FA19F17")
 
 fork := true
 
-val playVersion             = "3.0.4"
+val playVersion             = "3.0.5"
 val playWsStandaloneVersion = "3.0.4"
 
 lazy val testDependencies: Seq[ModuleID] = Seq(
