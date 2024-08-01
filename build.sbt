@@ -1,7 +1,8 @@
 import scala.collection.immutable
+import xerial.sbt.Sonatype.sonatypeCentralHost
 
-ThisBuild / organization := "io.github.hiveteq.play"
-
+ThisBuild / organization     := "io.github.hiveteq.play"
+ThisBuild / organizationName := "Hiveteq"
 // Those are mandatory for the release to Sonatype
 ThisBuild / homepage := Some(url("https://github.com/hiveteq/play-mockws-standalone"))
 ThisBuild / licenses := List("MIT" -> url("http://opensource.org/licenses/MIT"))
@@ -14,24 +15,41 @@ ThisBuild / developers := List(
   )
 )
 
-import xerial.sbt.Sonatype.sonatypeCentralHost
+// Publishing settings
 ThisBuild / sonatypeCredentialHost := sonatypeCentralHost
-publishTo                          := sonatypePublishToBundle.value
+ThisBuild / publishTo              := sonatypePublishToBundle.value
+// Sonatype profile for releases (otherwise it uses the organization name)
+ThisBuild / sonatypeProfileName := "io.github.hiveteq"
+ThisBuild / sonatypeProjectHosting := Some(
+  Sonatype.GitHubHosting("Hiveteq", "play-mockws-standalone", "sdudzin@hiveteq.com")
+)
+
+ThisBuild / versionScheme := Some("early-semver")
+ThisBuild / scalaVersion  := scala3
+ThisBuild / fork          := true
+ThisBuild / resolvers += "Typesafe repository".at("https://repo.typesafe.com/typesafe/releases/")
 
 // GPG signing
 usePgpKeyHex("3B3697C72B4D7CAA458E232D3759F1DA9FA19F17")
 
 fork := true
 
+val scala213                = "2.13.13"
+val scala3                  = "3.3.3"
 val playVersion             = "3.0.5"
 val playWsStandaloneVersion = "3.0.4"
 
-lazy val testDependencies: Seq[ModuleID] = Seq(
+val testDependencies: Seq[ModuleID] = Seq(
   "org.scalatest"     %% "scalatest"       % "3.2.19",
   "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0",
   "org.scalacheck"    %% "scalacheck"      % "1.18.0",
   "org.mockito"        % "mockito-core"    % "5.12.0"
 ).map(_ % Test)
+
+val noPublishingSettings = Seq(
+  publish / skip      := true,
+  publishLocal / skip := true
+)
 
 def scalaCollectionsCompat(scalaVersion: String): immutable.Seq[ModuleID] = {
   CrossVersion.partialVersion(scalaVersion) match {
@@ -42,18 +60,11 @@ def scalaCollectionsCompat(scalaVersion: String): immutable.Seq[ModuleID] = {
   }
 }
 
-val scala213 = "2.13.13"
-val scala3   = "3.4.2"
-
-ThisBuild / scalaVersion := scala3
-ThisBuild / fork         := true
-ThisBuild / resolvers += "Typesafe repository".at("https://repo.typesafe.com/typesafe/releases/")
-
 lazy val root = (project in file("."))
   .settings(
-    name            := "play-mockws-standalone-root",
-    publishArtifact := false
+    name := "play-mockws-standalone-root",
   )
+  .settings(noPublishingSettings)
   .aggregate(play30)
 
 lazy val play30 = (project in file("play-mockws-standalone"))
@@ -70,6 +81,3 @@ lazy val play30 = (project in file("play-mockws-standalone"))
     ),
     libraryDependencies ++= testDependencies
   )
-
-// Sonatype profile for releases (otherwise it uses the organization name)
-sonatypeProfileName := "io.github.hiveteq"
