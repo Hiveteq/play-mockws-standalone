@@ -14,7 +14,7 @@ addSbtPlugin("com.codacy" % "sbt-codacy-coverage" % "3.0.3")
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
 
 // https://github.com/sbt/sbt-ci-release
-addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.5.12")
+addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.6.0")
 
 addDependencyTreePlugin
 
