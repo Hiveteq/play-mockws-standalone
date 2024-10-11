@@ -22,7 +22,7 @@ addDependencyTreePlugin
 addSbtPlugin("org.jmotor.sbt" % "sbt-dependency-updates" % "1.2.9")
 
 // needed until https://github.com/sbt/sbt-ci-release/pull/298 is merged
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.12.0")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.12.1")
 
 // Scoverage coverage-parser relies on version 1.x
 // scala-xml 2.0 is most of the time non breaking
