@@ -96,7 +96,7 @@ case class FakeWSRequestHolder(
         copy(requestTimeout = Some(d))
     }
 
-  override def withRequestFilter(filter: WSRequestFilter): Self = copy(filters = filters :+ filter)
+  override def withRequestFilter(filter: WSRequestFilter): Self = this
 
   override def withUrl(url: String): Self = this.copy(url = url)
 
