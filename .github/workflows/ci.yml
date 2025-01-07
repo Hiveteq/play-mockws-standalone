@@ -27,6 +27,9 @@ jobs:
           java-version: ${{ matrix.java }}
           cache: sbt
 
+      - name: Setup sbt
+        uses: sbt/setup-sbt@v1
+        
       - name: Lint
         run: scripts/validate-code check
 
