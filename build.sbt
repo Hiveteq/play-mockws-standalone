@@ -54,7 +54,7 @@ val noPublishingSettings = Seq(
 def scalaCollectionsCompat(scalaVersion: String): immutable.Seq[ModuleID] = {
   CrossVersion.partialVersion(scalaVersion) match {
     case Some((2, n)) if n == 12 =>
-      List("org.scala-lang.modules" %% "scala-collection-compat" % "2.12.0")
+      List("org.scala-lang.modules" %% "scala-collection-compat" % "2.13.0")
     case _ =>
       Nil
   }
