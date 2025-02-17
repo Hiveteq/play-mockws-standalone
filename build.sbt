@@ -60,6 +60,8 @@ def scalaCollectionsCompat(scalaVersion: String): immutable.Seq[ModuleID] = {
   }
 }
 
+addCommandAlias("format", ";scalafmtSbt;scalafmtAll")
+
 lazy val root = (project in file("."))
   .settings(
     name := "play-mockws-standalone-root",
