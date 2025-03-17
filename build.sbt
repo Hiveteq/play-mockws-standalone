@@ -36,7 +36,7 @@ fork := true
 
 val scala213                = "2.13.13"
 val scala3                  = "3.3.3"
-val playVersion             = "3.0.6"
+val playVersion             = "3.0.7"
 val playWsStandaloneVersion = "3.0.5"
 
 val testDependencies: Seq[ModuleID] = Seq(
