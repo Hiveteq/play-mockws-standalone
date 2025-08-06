@@ -55,7 +55,7 @@ At the moment only Play 3.x is supported
 ### play-mockws
 
 ```scala
-libraryDependencies += "io.github.hiveteq.play" %% "play-mockws-standalone" % "3.0.7" % Test
+libraryDependencies += "io.github.hiveteq.play" %% "play-mockws-standalone" % "3.0.8" % Test
 ```
 
 ## Usage
