@@ -4,8 +4,8 @@ import xerial.sbt.Sonatype.sonatypeCentralHost
 ThisBuild / organization     := "io.github.hiveteq.play"
 ThisBuild / organizationName := "Hiveteq"
 // Those are mandatory for the release to Sonatype
-ThisBuild / homepage := Some(url("https://github.com/hiveteq/play-mockws-standalone"))
-ThisBuild / licenses := List("MIT" -> url("http://opensource.org/licenses/MIT"))
+ThisBuild / homepage   := Some(url("https://github.com/hiveteq/play-mockws-standalone"))
+ThisBuild / licenses   := List("MIT" -> url("http://opensource.org/licenses/MIT"))
 ThisBuild / developers := List(
   Developer(
     "sdudzin",
@@ -19,7 +19,7 @@ ThisBuild / developers := List(
 ThisBuild / sonatypeCredentialHost := sonatypeCentralHost
 ThisBuild / publishTo              := sonatypePublishToBundle.value
 // Sonatype profile for releases (otherwise it uses the organization name)
-ThisBuild / sonatypeProfileName := "io.github.hiveteq"
+ThisBuild / sonatypeProfileName    := "io.github.hiveteq"
 ThisBuild / sonatypeProjectHosting := Some(
   Sonatype.GitHubHosting("Hiveteq", "play-mockws-standalone", "sdudzin@hiveteq.com")
 )
