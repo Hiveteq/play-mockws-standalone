@@ -1,7 +1,8 @@
 Play MockWS Standalone
 =================
 ![CI Workflow](https://github.com/hiveteq/play-mockws-standalone/actions/workflows/ci.yml/badge.svg)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.hiveteq.play/play-mockws-standalone_3/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.hiveteq.play/play-mockws-standalone_3/)
+![Version](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fio%2Fgithub%2Fhiveteq%2Fplay%2Fplay-mockws-standalone_3%2Fmaven-metadata.xml)
+
 
 * [Goal](#goal)
 * [Simple example](#example)
