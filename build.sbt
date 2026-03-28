@@ -40,7 +40,7 @@ val playVersion             = "3.0.10"
 val playWsStandaloneVersion = "3.0.10"
 
 val testDependencies: Seq[ModuleID] = Seq(
-  "org.scalatest"     %% "scalatest"       % "3.2.19",
+  "org.scalatest"     %% "scalatest"       % "3.2.20",
   "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0",
   "org.scalacheck"    %% "scalacheck"      % "1.19.0",
   "org.mockito"        % "mockito-core"    % "5.23.0"
