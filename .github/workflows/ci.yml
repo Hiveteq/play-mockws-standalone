@@ -11,8 +11,8 @@ jobs:
     name: Build and Test
     strategy:
       matrix:
-        java: 
-          - 11
+        java:
+          - 17
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current branch (full)
