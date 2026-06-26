@@ -1,9 +1,9 @@
 import scala.collection.immutable
-import xerial.sbt.Sonatype.sonatypeCentralHost
 
 ThisBuild / organization     := "io.github.hiveteq.play"
 ThisBuild / organizationName := "Hiveteq"
-// Those are mandatory for the release to Sonatype
+// Mandatory metadata for the release to the Sonatype Central Portal.
+// publishTo / credentials / signing are managed by sbt-ci-release 1.11.x.
 ThisBuild / homepage   := Some(url("https://github.com/hiveteq/play-mockws-standalone"))
 ThisBuild / licenses   := List("MIT" -> url("http://opensource.org/licenses/MIT"))
 ThisBuild / developers := List(
@@ -15,22 +15,13 @@ ThisBuild / developers := List(
   )
 )
 
-// Publishing settings
-ThisBuild / sonatypeCredentialHost := sonatypeCentralHost
-ThisBuild / publishTo              := sonatypePublishToBundle.value
-// Sonatype profile for releases (otherwise it uses the organization name)
-ThisBuild / sonatypeProfileName    := "io.github.hiveteq"
-ThisBuild / sonatypeProjectHosting := Some(
-  Sonatype.GitHubHosting("Hiveteq", "play-mockws-standalone", "sdudzin@hiveteq.com")
-)
-
 ThisBuild / versionScheme := Some("early-semver")
 ThisBuild / scalaVersion  := scala3
 ThisBuild / fork          := true
 ThisBuild / resolvers += "Typesafe repository".at("https://repo.typesafe.com/typesafe/releases/")
-
-// GPG signing
-usePgpKeyHex("3B3697C72B4D7CAA458E232D3759F1DA9FA19F17")
+// sbt 2.x requires JDK 17+ to run, but the published artifacts must stay
+// usable on JDK 11 (Play 3.0's baseline), so target Java 11 bytecode.
+ThisBuild / scalacOptions ++= Seq("-release", "11")
 
 fork := true
 
