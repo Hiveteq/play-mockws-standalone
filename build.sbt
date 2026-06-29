@@ -26,7 +26,7 @@ ThisBuild / scalacOptions ++= Seq("-release", "11")
 fork := true
 
 val scala213                = "2.13.13"
-val scala3                  = "3.3.3"
+val scala3                  = "3.3.8"
 val playVersion             = "3.0.11"
 val playWsStandaloneVersion = "3.0.10"
 
