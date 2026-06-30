@@ -1,3 +1,23 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json"
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^build\\.sbt$/"],
+      "matchStrings": [
+        "val playWsStandaloneVersion\\s*=\\s*\"(?<currentValue>.*?)\""
+      ],
+      "depNameTemplate": "org.playframework:play-ws-standalone",
+      "datasourceTemplate": "sbt"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^build\\.sbt$/"],
+      "matchStrings": [
+        "val playVersion\\s*=\\s*\"(?<currentValue>.*?)\""
+      ],
+      "depNameTemplate": "org.playframework:play-test",
+      "datasourceTemplate": "sbt"
+    }
+  ]
 }
