@@ -5,7 +5,7 @@ logLevel := Level.Warn
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.4.4")
 
 // https://github.com/scalameta/scalafmt
-addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.6.1")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.6.2")
 
 // https://github.com/sbt/sbt-ci-release
 // 1.11.x publishes to the Sonatype Central Portal directly and no longer
