@@ -12,8 +12,18 @@ printMessage() {
   echo "[info]"
 }
 
+# The sbt 2.x launcher joins its CLI arguments into a single command line, and
+# `set` consumes to end of line -- so passing commands as separate arguments made
+# them parse as infix calls on the setting ("value scalafmtCheckAll is not a
+# member of sbt.Tags.Rule"). Build one explicitly ';'-delimited command line
+# instead, which both the 1.x and 2.x launchers parse the same way.
 runSbt() {
-  sbt 'set Global / concurrentRestrictions += Tags.limitAll(1)' "$@" | grep --line-buffered -v 'Resolving \|Generating '
+  local commands=""
+  local cmd
+  for cmd in "$@"; do
+    commands="$commands ;$cmd"
+  done
+  sbt ";set Global / concurrentRestrictions += Tags.limitAll(1)$commands" | grep --line-buffered -v 'Resolving \|Generating '
 }
 
 # Runs code formating validation in the current directory
