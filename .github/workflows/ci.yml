@@ -34,4 +34,6 @@ jobs:
         run: scripts/validate-code check
 
       - name: Test project
-        run: sbt +compile +test
+        # The sbt 2.x launcher joins arguments into one command line, which needs
+        # explicit ';' separators between commands.
+        run: sbt ";+compile ;+test"
