@@ -34,7 +34,7 @@ val testDependencies: Seq[ModuleID] = Seq(
   "org.scalatest"     %% "scalatest"       % "3.2.20",
   "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0",
   "org.scalacheck"    %% "scalacheck"      % "1.20.0",
-  "org.mockito"        % "mockito-core"    % "5.24.0"
+  "org.mockito"        % "mockito-core"    % "5.25.0"
 ).map(_ % Test)
 
 val noPublishingSettings = Seq(
